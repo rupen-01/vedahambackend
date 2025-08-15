@@ -22,6 +22,11 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
+app.get("/",  () => {
+  console.log("working api...");
+  
+})
+
 // Form Submit Route
 app.post("/submit-form", upload.single("cv"), async (req, res) => {
   try {
