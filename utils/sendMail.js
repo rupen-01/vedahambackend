@@ -1,6 +1,7 @@
+require("dotenv").config();
 const nodemailer = require("nodemailer");
 
-const sendEmail = async (to, subject, text, attachments = []) => {
+async function test() {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
@@ -11,13 +12,14 @@ const sendEmail = async (to, subject, text, attachments = []) => {
     },
   });
 
-  await transporter.sendMail({
-    from: `"Form Submission" <${process.env.SMTP_USER}>`,
-    to,
-    subject,
-    text,
-    attachments,
+  const info = await transporter.sendMail({
+    from: `"Test Sender" <${process.env.SMTP_USER}>`,
+    to: process.env.ADMIN_EMAIL,
+    subject: "Test Email",
+    text: `This is a test email. Sent using: ${process.env.SMTP_USER}`,
   });
-};
 
-module.exports = sendEmail;
+  console.log("✅ Message sent:", info.messageId);
+}
+
+test().catch(console.error);
